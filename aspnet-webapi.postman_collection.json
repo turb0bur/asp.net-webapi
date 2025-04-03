@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
+		"name": "ASP.NET WebAPI",
+		"description": "Collection for ASP.NET WebAPI Food endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Foods API v1",
+			"item": [
+				{
+					"name": "Get All Foods",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/foods?page=1&pageCount=10",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "foods"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageCount",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Food",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/foods/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "foods", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Food",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Pizza\",\n    \"type\": \"Italian\",\n    \"calories\": 800,\n    \"created\": \"2024-04-03T12:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/foods",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "foods"]
+						}
+					}
+				},
+				{
+					"name": "Update Food",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Pizza\",\n    \"type\": \"Italian\",\n    \"calories\": 850,\n    \"created\": \"2024-04-03T12:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/foods/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "foods", "1"]
+						}
+					}
+				},
+				{
+					"name": "Partially Update Food",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json-patch+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"op\": \"replace\",\n        \"path\": \"/name\",\n        \"value\": \"Patched Pizza\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/foods/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "foods", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Food",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/foods/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "foods", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Random Meal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/foods/GetRandomMeal",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "foods", "GetRandomMeal"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Foods API v2",
+			"item": [
+				{
+					"name": "Get Version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v2/foods",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v2", "foods"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		}
+	]
+} 
