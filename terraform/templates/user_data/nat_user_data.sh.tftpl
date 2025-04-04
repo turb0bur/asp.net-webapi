@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function enable_ip_forwarding() {
+    sed -i 's/^net.ipv4.ip_forward = .*/net.ipv4.ip_forward = 1/' /etc/sysctl.conf
+    sysctl -p
+}
+
+function get_instance_metadata() {
+    TOKEN=$(curl --request PUT "http://169.254.169.254/latest/api/token" --header "X-aws-ec2-metadata-token-ttl-seconds: 3600")
+    INSTANCE_ID=$(curl -s "http://169.254.169.254/latest/meta-data/instance-id" --header "X-aws-ec2-metadata-token: $TOKEN")
+    AWS_REGION="${REGION}"
+}
+
+function add_route_rules() {
+    ROUTE_TABLE_ID="${PRIVATE_ROUTE_TABLE_ID}"
+    echo "Private Route Table ID: $${ROUTE_TABLE_ID}"
+    echo "Instance ID: $${INSTANCE_ID}"
+    echo "Region: $${AWS_REGION}"
+
+    aws ec2 create-route \
+        --route-table-id "$ROUTE_TABLE_ID" \
+        --destination-cidr-block "0.0.0.0/0" \
+        --instance-id "$${INSTANCE_ID}" \
+        --region "$${AWS_REGION}"
+}
+
+function disable_source_destination_check() {
+    aws ec2 modify-instance-attribute \
+        --instance-id "$${INSTANCE_ID}" \
+        --no-source-dest-check \
+        --region "$${AWS_REGION}"
+}
+
+function ensure_nat_instance_up() {
+    chkconfig iptables on
+}
+
+function main() {
+    enable_ip_forwarding
+    get_instance_metadata
+    add_route_rules
+    disable_source_destination_check
+    ensure_nat_instance_up
+}
+
+main 

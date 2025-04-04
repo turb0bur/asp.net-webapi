@@ -1,0 +1,26 @@
+[
+   {
+      "name": "${container_name}",
+      "image": "${webapi_image}",
+      "memory": ${container_memory},
+      "cpu": ${container_cpu},
+      "essential": true,
+      "portMappings": [
+         {
+            "containerPort": ${container_port},
+            "hostPort": 0,
+            "protocol": "tcp"
+         }
+      ],
+      "environment": [
+         {
+            "name": "ASPNETCORE_ENVIRONMENT",
+            "value": "${aspnet_environment}"
+         },
+         {
+            "name": "ASPNETCORE_URLS",
+            "value": "${aspnet_urls}"
+         }
+      ]
+   }
+]
